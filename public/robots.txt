@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://grappling-maison.c-l-c.workers.dev/sitemap-index.xml

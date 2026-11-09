@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort((x, y) => y.data.date.valueOf() - x.data.date.valueOf());
+---
+<Base title="Dojo Maison : s'entraîner au grappling et au JJB chez soi" description="S'entraîner au grappling, au JJB et à la lutte chez soi : mannequins de grappling, tapis, exercices et guides d'achat." nav="accueil">
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">JJB · Lutte · Judo · Grappling</p>
+      <h1>Ton partenaire <span class="tape">ne fatigue</span> jamais</h1>
+      <p class="lead">Passages de garde, montées, soumissions, projections : tout ce qu'il faut pour travailler ton grappling à la maison entre deux séances au club. Matériel choisi, guides concrets, zéro blabla.</p>
+      <div class="actions">
+        <a class="btn btn-amazon" href="/test-mannequin-tejay">Notre mannequin recommandé</a>
+        <a class="btn btn-ghost" href="/remplir-mannequin-grappling">Comment le remplir</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow" style="color:var(--muted)">Le choix de la rédaction</p>
+        <h2>Le mannequin pour commencer</h2>
+      </div>
+      <article class="product">
+        <div class="product-pick"><span>Mannequin de grappling</span><span>Notre choix</span></div>
+        <div class="product-body">
+          <h3>TEJAY — Mannequin de lutte et de JJB en vinyle</h3>
+          <p>Un mannequin en forme de corps, avec bras et jambes, vendu vide pour réduire les frais de port. Tu le remplis toi-même et tu choisis son poids. Assez grand pour travailler la garde, le contrôle latéral et la montée dans des positions réalistes.</p>
+          <dl class="specs">
+            <dt>Hauteur</dt><dd>177,8 cm (taille L)</dd>
+            <dt>Matière</dt><dd>Vinyle</dd>
+            <dt>Livré</dt><dd>Non rempli</dd>
+            <dt>Couleur</dt><dd>Noir</dd>
+            <dt>Disciplines</dt><dd>JJB, lutte, judo, MMA, self-défense</dd>
+          </dl>
+          <div class="actions">
+            <a class="btn btn-amazon" href="https://link.amazon/B0aT0szSr" rel="sponsored nofollow noopener" target="_blank">Voir le prix sur Amazon</a>
+            <a class="btn btn-ghost" href="/test-mannequin-tejay">Lire l'avis complet</a>
+          </div>
+          <p class="small">Lien partenaire. Le prix et la disponibilité sont ceux affichés sur Amazon au moment de ta visite.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Guides et avis</h2>
+        <p>Les questions qu'on se pose avant d'acheter un mannequin, et ce qu'on en fait une fois qu'il est dans le salon.</p>
+      </div>
+      <div class="grid">
+        {articles.map((a) => (
+          <article class="card">
+            <span class="tag">{a.data.category}</span>
+            <h3><a href={`/${a.id}`}>{a.data.title}</a></h3>
+            <p>{a.data.description}</p>
+            <a class="more" href={`/${a.id}`}>Lire</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap read stack">
+      <h2>Pourquoi s'entraîner au grappling chez soi ?</h2>
+      <p>Au club, on manque souvent de temps pour répéter. Un passage de garde se travaille à des centaines de répétitions avant de sortir naturellement en sparring. Un mannequin ne remplace pas un partenaire vivant, qui résiste et réagit, mais il permet de répéter les déplacements, les transitions et les finitions autant de fois que tu veux, sans fatiguer personne.</p>
+      <p>Ici, on te recommande uniquement du matériel utile pour ce travail : mannequins, tapis de sol, et les accessoires qui rendent les séances maison plus sûres.</p>
+    </div>
+  </section>
+</Base>

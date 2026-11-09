@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
+  return articles.map((article) => ({ params: { id: article.id }, props: { article } }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const d = article.data;
+const updated = d.date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.title,
+  description: d.description,
+  dateModified: d.date.toISOString().slice(0, 10),
+  inLanguage: 'fr-FR',
+  publisher: { '@type': 'Organization', name: 'Dojo Maison' },
+};
+---
+<Base title={`${d.title} | Dojo Maison`} description={d.description} nav={d.section}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <header class="article-head">
+    <div class="wrap read">
+      <p class="eyebrow">{d.category} · {d.section === 'mannequins' ? 'Mannequins' : 'Guides'}</p>
+      <h1>{d.title}</h1>
+      <p class="meta">Mis à jour en {updated}{d.readingTime ? ` · ${d.readingTime}` : ''}</p>
+    </div>
+  </header>
+  <div class="wrap article"><div class="read stack"><Content /></div></div>
+</Base>
